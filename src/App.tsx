@@ -15,7 +15,7 @@ export type TaskType = {
 
 export type FilterValuesType = "all" | "active" | "completed";
 
-type TodoListType = {
+export type TodoListType = {
     id: string
     title: string
     filter: FilterValuesType
@@ -103,7 +103,7 @@ function App() {
             title: title,
             filter: "all"
         }
-        setTodoLists([...todoLists, newTodoList])
+        setTodoLists([newTodoList,...todoLists ])
         setTasks({
             ...tasks, [newTodoListID]: []
         })
