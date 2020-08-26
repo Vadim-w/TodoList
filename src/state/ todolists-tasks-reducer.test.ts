@@ -2,8 +2,10 @@ import {TaskStateType, TodoListType} from "../App";
 import {AddTodoListAC, RemoveTodoListAC, todolistsReducer} from "./todolists-reducer";
 import {tasksReducer} from "./tasks-reducer";
 
-test('property with todolistId should be deleted', () => {
-    const startState: TaskStateType = {
+let startState: TaskStateType;
+
+beforeEach( () => {
+     startState = {
         "todolistId1": [
             { id: "1", title: "CSS", isDone: false },
             { id: "2", title: "JS", isDone: true },
@@ -15,6 +17,10 @@ test('property with todolistId should be deleted', () => {
             { id: "3", title: "tea", isDone: false }
         ]
     };
+})
+
+test('property with todolistId should be deleted', () => {
+
 
     const action = RemoveTodoListAC("todolistId2");
 

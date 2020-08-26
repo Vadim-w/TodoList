@@ -1,9 +1,12 @@
 import React, {useState, ChangeEvent, KeyboardEvent} from "react";
-import {FilterValuesType, TaskType} from "./App";
+import {FilterValuesType, TaskType} from "./AppWithReducers";
 import {AddItemForm} from "./AddItemForm";
 import {EditableSpan} from "./EditableSpan";
 import {Button, Checkbox, IconButton} from "@material-ui/core";
 import {Delete} from '@material-ui/icons';
+import {useDispatch, useSelector} from "react-redux";
+import {AppRootStateType} from "./state/store";
+import {TaskStateType, TodoListType} from "./AppWithRedux";
 
 type PropsType = {
     id: string
@@ -20,6 +23,9 @@ type PropsType = {
 }
 
 export function TodoList(props: PropsType) {
+
+    // let tasks = useSelector<AppRootStateType, Array<TaskType>>( (state) => state.tasks.[props.id])
+    // let dispatch = useDispatch()
 
     function onAllClickHandler() {
         props.changeFilter("all", props.id)
