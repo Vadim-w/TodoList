@@ -1,7 +1,6 @@
 import { TaskStateType} from './../AppWithReducers';
 import {v1} from "uuid";
 import {AddTodoListActionType, RemoveTodoListActionType} from "./todolists-reducer";
-import {TaskType} from "../AppWithRedux";
 
 export type RemoveTaskActionType = {
     type: 'REMOVE_TASK',
@@ -92,15 +91,3 @@ export const changeTaskTitleAC = (taskID: string, title: string, todoListID: str
     return {type: 'CHANGE_TASK_TITLE', taskID, title, todoListID}
 }
 
-/*let changeTitleAndStatus = (tasks: Array<TaskStateType>, taskID: string, property: string | boolean):  Array<TaskStateType> => {
-    let propertyName = typeof property === "string" ? "title" : "isDone";
-     return [...tasks.map(task => {
-        if (task.id !== taskID) {
-            return task
-        }
-        else {
-            return {...task, [propertyName]: property}
-        }
-    })]
-
-}*/

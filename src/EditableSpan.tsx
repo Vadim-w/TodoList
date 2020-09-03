@@ -7,21 +7,21 @@ type PropsType = {
 
 }
 
-export function EditableSpan(props: PropsType) {
-
+export const EditableSpan = React.memo((props: PropsType) =>  {
+    console.log("EditableSpan called")
     let [editMode, setEditMode] = useState<boolean>(false)
     let [title, setTitle] = useState<string>(props.title)
 
-    function activateEditMode() {
+    const activateEditMode = () =>  {
         setEditMode(true)
     }
 
-    function deActivateEditMode() {
+    const deActivateEditMode = () =>  {
         setEditMode(false)
         props.saveNewTitle(title)
     }
 
-    function changeTitle(e:ChangeEvent<HTMLInputElement>) {
+    const changeTitle = (e:ChangeEvent<HTMLInputElement>) =>  {
         setTitle(e.currentTarget.value)
     }
 
@@ -30,4 +30,4 @@ export function EditableSpan(props: PropsType) {
             ? <TextField variant={"filled"} value={title} onBlur={deActivateEditMode} autoFocus={true} onChange={changeTitle}/>
             : <span onDoubleClick={activateEditMode}>{props.title}</span>
     )
-}
+})

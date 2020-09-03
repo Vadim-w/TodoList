@@ -1,20 +1,23 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
 import {Button, IconButton, TextField} from '@material-ui/core';
 import {Delete, AddBox} from '@material-ui/icons';
+import {log} from "util";
 
 
 type PropsType = {
     addItem: (title: string) => void
 }
 
-export function AddItemForm(props: PropsType) {
+export const AddItemForm = React.memo ((props: PropsType)  => {
 
     let [itemName, setItemName] = useState("");
     let [error, setError] = useState<string | null>(null);
 
     function onItemNameChanged(e: ChangeEvent<HTMLInputElement>) {
         setItemName(e.currentTarget.value);
-        setError(null)
+        if (error !== null) {
+            setError(null)
+        }
     }
 
     function onAddItemKeyPressed(e: KeyboardEvent<HTMLInputElement>) {
@@ -48,4 +51,4 @@ export function AddItemForm(props: PropsType) {
             </IconButton>
         </div>
     )
-}
+})
