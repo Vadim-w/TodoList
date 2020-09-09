@@ -1,7 +1,6 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
-import {Button, IconButton, TextField} from '@material-ui/core';
-import {Delete, AddBox} from '@material-ui/icons';
-import {log} from "util";
+import {IconButton, TextField} from '@material-ui/core';
+import {AddBox} from '@material-ui/icons';
 
 
 type PropsType = {
