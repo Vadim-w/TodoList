@@ -1,30 +1,43 @@
 import axios from "axios";
 
-type TodoListType= {
+export type TodoListType= {
     id: string
     addedDate: string
     order: number
     title: string
 }
-type CreateResponseType = {
-    resultCode: number
-    messages: Array<string>,
-    data: {
-        item:  TodoListType
-    }
-}
-type DeleteResponseType = {
-    resultCode: number
-    messages: Array<string>,
-    data: {
-        item: TodoListType
-    }
+export type TaskType = {
+    description: string
+    title: string
+    status: TaskStatuses
+    priority: TodoTaskPriorities
+    startDate: string
+    deadline: string
+    id: string
+    todoListId: string
+    order: number
+    addedDate: string
 }
 
 type CommonResponseType<T = {}> = {
     resultCode: number
     messages: Array<string>
     data: T
+}
+
+export enum TaskStatuses {
+    New,
+    InProgress,
+    Completed,
+    Draft
+}
+
+export enum TodoTaskPriorities {
+    Low,
+    Middle,
+    Hi,
+    Urgently,
+    Later
 }
 
 const instance = axios.create({
@@ -49,5 +62,20 @@ export const todoListApi = {
     },
     updateTodoList(todoId: string, title: string) {
         return instance.put<CommonResponseType>(`todo-lists/${todoId}`, {title})
+    }
+}
+
+export const tasksApi = {
+    getTasks(todoId: string) {
+        return instance.get<Array<TaskType>>(`/todo-lists/${todoId}/tasks`)
+    },
+    createTask(todoId: string, title: string) {
+        return instance.post<CommonResponseType<{item: TaskType}>>(`/todo-lists/${todoId}/tasks`, {title})
+    },
+    deleteTask(todoId: string, taskId: string) {
+        return instance.delete<CommonResponseType>( `/todo-lists/${todoId}/tasks/${taskId}`)
+    },
+    updateTask(todoId: string, taskId: string, title: string) {
+        return instance.put<CommonResponseType<{item: TaskType}>>( `/todo-lists/${todoId}/tasks/${taskId}`, {title})
     }
 }

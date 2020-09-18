@@ -1,20 +1,39 @@
-import {TaskStateType, TodoListType} from "../App";
-import {AddTodoListAC, RemoveTodoListAC, todolistsReducer} from "./todolists-reducer";
+import {AddTodoListAC, RemoveTodoListAC, TodoListDomainType, todolistsReducer} from "./todolists-reducer";
 import {tasksReducer} from "./tasks-reducer";
+import {TaskStateType} from "../AppWithRedux";
+import {TaskStatuses} from "../api/todolist-api";
 
 let startState: TaskStateType;
 
 beforeEach( () => {
      startState = {
         "todolistId1": [
-            { id: "1", title: "CSS", isDone: false },
-            { id: "2", title: "JS", isDone: true },
-            { id: "3", title: "React", isDone: false }
+            { id: "1", title: "CSS", status: TaskStatuses.New, todoListId: "",
+                startDate: "", priority: 0,
+                order: 0, description: "",
+                deadline: "", addedDate: ""},
+            { id: "2", title: "JS", status: TaskStatuses.Completed, todoListId: "",
+                startDate: "", priority: 0,
+                order: 0, description: "",
+                deadline: "", addedDate: ""},
+            { id: "3", title: "React", status: TaskStatuses.New, todoListId: "",
+                startDate: "", priority: 0,
+                order: 0, description: "",
+                deadline: "", addedDate: ""}
         ],
         "todolistId2": [
-            { id: "1", title: "bread", isDone: false },
-            { id: "2", title: "milk", isDone: true },
-            { id: "3", title: "tea", isDone: false }
+            { id: "1", title: "bread", status: TaskStatuses.New, todoListId: "",
+                startDate: "", priority: 0,
+                order: 0, description: "",
+                deadline: "", addedDate: ""},
+            { id: "2", title: "milk", status: TaskStatuses.Completed, todoListId: "",
+                startDate: "", priority: 0,
+                order: 0, description: "",
+                deadline: "", addedDate: ""},
+            { id: "3", title: "tea", status: TaskStatuses.New, todoListId: "",
+                startDate: "", priority: 0,
+                order: 0, description: "",
+                deadline: "", addedDate: ""}
         ]
     };
 })
@@ -36,7 +55,7 @@ test('property with todolistId should be deleted', () => {
 
 test('ids should be equals', () => {
     const startTasksState: TaskStateType = {};
-    const startTodolistsState: Array<TodoListType> = [];
+    const startTodolistsState: Array<TodoListDomainType> = [];
 
     const action = AddTodoListAC("new todolist");
 

@@ -1,24 +1,25 @@
 import {
     AddTodoListAC,
     ChangeTodoListFilterAC,
-    ChangeTodoListTitleAC,
-    RemoveTodoListAC,
+    ChangeTodoListTitleAC, FilterValuesType,
+    RemoveTodoListAC, TodoListDomainType,
     todolistsReducer
 } from './todolists-reducer';
 import {v1} from 'uuid';
-import {FilterValuesType, TaskStateType, TodoListType} from '../App';
 import {tasksReducer} from "./tasks-reducer";
+import {TaskStatuses} from "../api/todolist-api";
+import {TaskStateType} from "../AppWithRedux";
 
 let todolistId1: string;
 let todolistId2: string;
-let startState: Array<TodoListType> = [];
+let startState: Array<TodoListDomainType> = [];
 
 beforeEach(() => {
      todolistId1 = v1();
      todolistId2 = v1();
      startState = [
-        {id: todolistId1, title: "What to learn", filter: "all"},
-        {id: todolistId2, title: "What to buy", filter: "all"}
+        {id: todolistId1, title: "What to learn", filter: "all", order: 0, addedDate: ""},
+        {id: todolistId2, title: "What to buy", filter: "all",  order: 0, addedDate: ""}
     ]
 })
 
@@ -37,9 +38,9 @@ test('correct todolist should be added', () => {
 
     let newTodolistTitle = "New Todolist";
 
-    const startState: Array<TodoListType> = [
-        {id: todolistId1, title: "What to learn", filter: "all"},
-        {id: todolistId2, title: "What to buy", filter: "all"}
+    const startState: Array<TodoListDomainType> = [
+        {id: todolistId1, title: "What to learn", filter: "all", order: 0, addedDate: ""},
+        {id: todolistId2, title: "What to buy", filter: "all", order: 0, addedDate: ""}
     ]
 
     const endState = todolistsReducer(startState, AddTodoListAC(newTodolistTitle))
@@ -85,14 +86,32 @@ test('correct filter of todolist should be changed', () => {
 test('new array should be added when new todolist is added', () => {
     const startState: TaskStateType = {
         "todolistId1": [
-            { id: "1", title: "CSS", isDone: false },
-            { id: "2", title: "JS", isDone: true },
-            { id: "3", title: "React", isDone: false }
+            { id: "1", title: "CSS", status: TaskStatuses.New,  todoListId: "",
+                startDate: "", priority: 0,
+                order: 0, description: "",
+                deadline: "", addedDate: ""},
+            { id: "2", title: "JS", status: TaskStatuses.Completed,  todoListId: "",
+                startDate: "", priority: 0,
+                order: 0, description: "",
+                deadline: "", addedDate: "" },
+            { id: "3", title: "React", status: TaskStatuses.New,  todoListId: "",
+                startDate: "", priority: 0,
+                order: 0, description: "",
+                deadline: "", addedDate: "" }
         ],
         "todolistId2": [
-            { id: "1", title: "bread", isDone: false },
-            { id: "2", title: "milk", isDone: true },
-            { id: "3", title: "tea", isDone: false }
+            { id: "1", title: "bread", status: TaskStatuses.New,  todoListId: "",
+                startDate: "", priority: 0,
+                order: 0, description: "",
+                deadline: "", addedDate: ""  },
+            { id: "2", title: "milk", status: TaskStatuses.Completed,  todoListId: "",
+                startDate: "", priority: 0,
+                order: 0, description: "",
+                deadline: "", addedDate: "" },
+            { id: "3", title: "tea", status: TaskStatuses.New,  todoListId: "",
+                startDate: "", priority: 0,
+                order: 0, description: "",
+                deadline: "", addedDate: "" }
         ]
     };
 

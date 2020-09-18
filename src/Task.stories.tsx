@@ -1,6 +1,7 @@
 import React from 'react';
 import {action} from "@storybook/addon-actions";
 import {Task} from "./Task";
+import {TaskStatuses} from "./api/todolist-api";
 
 export default {
     title: 'Task Stories',
@@ -15,14 +16,24 @@ const changeTitleCallback = action('Title changed inside Task')
 export const TaskBaseExample = (props: any) => {
     return (
         <div>
-        <Task task={{id: '1', isDone: true, title: 'CSS'}}
+        <Task task={{id: '1', status: TaskStatuses.New,
+            title: 'CSS', todoListId: "",
+            startDate: "", priority: 0,
+            order: 0, description: "",
+            deadline: "", addedDate: ""
+        }}
               changeTaskTitle={changeTitleCallback}
               changeStatus={changeStatusCallback}
               removeTask={removeCallback}
               todoListID={'todoList1'}
         />
 
-    <Task task={{id: '1', isDone: false, title: 'CSS'}}
+    <Task task={{id: '2', status: TaskStatuses.Completed,
+        title: 'CSS',  todoListId: "",
+        startDate: "", priority: 0,
+        order: 0, description: "",
+        deadline: "", addedDate: ""
+    }}
           changeTaskTitle={changeTitleCallback}
           changeStatus={changeStatusCallback}
           removeTask={removeCallback}
