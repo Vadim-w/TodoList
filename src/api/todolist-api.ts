@@ -1,11 +1,25 @@
 import axios from "axios";
 
+export type UpdateTodoListModelType = {
+
+}
+
 export type TodoListType= {
     id: string
     addedDate: string
     order: number
     title: string
 }
+
+export type UpdateTaskModelType = {
+    title: string
+    description: string
+    status: TaskStatuses
+    priority: TodoTaskPriorities
+    startDate: string
+    deadline: string
+}
+
 export type TaskType = {
     description: string
     title: string
@@ -23,6 +37,12 @@ type CommonResponseType<T = {}> = {
     resultCode: number
     messages: Array<string>
     data: T
+}
+
+type GetTasks = {
+    items: Array<TaskType>
+    totalCount: number
+    error: string | null
 }
 
 export enum TaskStatuses {
@@ -67,7 +87,7 @@ export const todoListApi = {
 
 export const tasksApi = {
     getTasks(todoId: string) {
-        return instance.get<Array<TaskType>>(`/todo-lists/${todoId}/tasks`)
+        return instance.get<GetTasks>(`/todo-lists/${todoId}/tasks`)
     },
     createTask(todoId: string, title: string) {
         return instance.post<CommonResponseType<{item: TaskType}>>(`/todo-lists/${todoId}/tasks`, {title})
@@ -75,7 +95,7 @@ export const tasksApi = {
     deleteTask(todoId: string, taskId: string) {
         return instance.delete<CommonResponseType>( `/todo-lists/${todoId}/tasks/${taskId}`)
     },
-    updateTask(todoId: string, taskId: string, title: string) {
-        return instance.put<CommonResponseType<{item: TaskType}>>( `/todo-lists/${todoId}/tasks/${taskId}`, {title})
+    updateTask(todoId: string, taskId: string, model: UpdateTaskModelType) {
+        return instance.put<CommonResponseType<{item: TaskType}>>( `/todo-lists/${todoId}/tasks/${taskId}`, model)
     }
 }

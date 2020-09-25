@@ -8,7 +8,6 @@ type PropsType = {
 }
 
 export const EditableSpan = React.memo((props: PropsType) =>  {
-    console.log("EditableSpan called")
     let [editMode, setEditMode] = useState<boolean>(false)
     let [title, setTitle] = useState<string>(props.title)
 

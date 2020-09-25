@@ -22,7 +22,9 @@ const initialGlobalState: AppRootStateType  = {
 
     tasks: {
         ["todolistId1"]: [
-            {id: v1(), title: "HTML&CSS",
+            {
+                id: v1(),
+                title: "HTML&CSS",
                 description: "",
                 status: 0, priority: 0,
                 startDate: "", deadline: "",
@@ -31,7 +33,9 @@ const initialGlobalState: AppRootStateType  = {
             },
         ],
         ["todolistId2"]: [
-            {id: v1(), title: "HTML&CSS",
+            {
+                id: v1(),
+                title: "HTML&CSS",
                 description: "",
                 status: 0, priority: 0,
                 startDate: "", deadline: "",
@@ -41,6 +45,7 @@ const initialGlobalState: AppRootStateType  = {
         ],
 
     }
+
 
 }
 

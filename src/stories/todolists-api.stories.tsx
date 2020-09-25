@@ -95,17 +95,26 @@ export const DeleteTask = () => {
     return <div> {JSON.stringify(state)}</div>
 }
 
-export const UpdateTask = () => {
-    const [state, setState] = useState<any>(null)
-    useEffect(() => {
-        let todoId = "c719ab4e-2e41-47c8-a903-f1d9791a6ac9"
-        let taskId = "e1a9b173-09c7-42ef-b7f1-83f43072db62"
-        let title = "WORK>>>>>>>"
-        tasksApi.updateTask(todoId, taskId, title)
-            .then( (response) => {
-                setState(response.data)
-            })
-    }, [])
-
-    return <div> {JSON.stringify(state)}</div>
-}
+// export const UpdateTask = () => {
+//     const [state, setState] = useState<any>(null)
+//     useEffect(() => {
+//         let todoId = "c719ab4e-2e41-47c8-a903-f1d9791a6ac9"
+//         let taskId = "e1a9b173-09c7-42ef-b7f1-83f43072db62"
+//         const task = getState().tasks[todoId].find(t => t.id === taskId)
+//         const model = {
+//             title: task.title,
+//             startDate: task.startDate,
+//             priority: task.priority,
+//             description: task.description,
+//             deadline: task.deadline,
+//             status: status
+//         }
+//         let title = "WORK>>>>>>>"
+//         tasksApi.updateTask(todoId, taskId, model)
+//             .then( (response:any) => {
+//                 setState(response.data.data.item)
+//             })
+//     }, [])
+//
+//     return <div> {JSON.stringify(state)}</div>
+// }
