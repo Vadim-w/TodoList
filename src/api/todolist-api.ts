@@ -1,75 +1,14 @@
 import axios from "axios";
 
-export type UpdateTodoListModelType = {
-
-}
-
-export type TodoListType= {
-    id: string
-    addedDate: string
-    order: number
-    title: string
-}
-
-export type UpdateTaskModelType = {
-    title: string
-    description: string
-    status: TaskStatuses
-    priority: TodoTaskPriorities
-    startDate: string
-    deadline: string
-}
-
-export type TaskType = {
-    description: string
-    title: string
-    status: TaskStatuses
-    priority: TodoTaskPriorities
-    startDate: string
-    deadline: string
-    id: string
-    todoListId: string
-    order: number
-    addedDate: string
-}
-
-type CommonResponseType<T = {}> = {
-    resultCode: number
-    messages: Array<string>
-    data: T
-}
-
-type GetTasks = {
-    items: Array<TaskType>
-    totalCount: number
-    error: string | null
-}
-
-export enum TaskStatuses {
-    New,
-    InProgress,
-    Completed,
-    Draft
-}
-
-export enum TodoTaskPriorities {
-    Low,
-    Middle,
-    Hi,
-    Urgently,
-    Later
-}
-
 const instance = axios.create({
     withCredentials: true,
     headers: {
         'API-KEY': "1ddb00ae-87fd-4067-9570-c868a2d6ade3"
     },
     baseURL: 'https://social-network.samuraijs.com/api/1.1/'
-}
-)
+})
 
-
+//api
 export const todoListApi = {
     getTodoLists() {
         return instance.get<Array<TodoListType>>('todo-lists')
@@ -84,7 +23,6 @@ export const todoListApi = {
         return instance.put<CommonResponseType>(`todo-lists/${todoId}`, {title})
     }
 }
-
 export const tasksApi = {
     getTasks(todoId: string) {
         return instance.get<GetTasks>(`/todo-lists/${todoId}/tasks`)
@@ -99,3 +37,56 @@ export const tasksApi = {
         return instance.put<CommonResponseType<{item: TaskType}>>( `/todo-lists/${todoId}/tasks/${taskId}`, model)
     }
 }
+
+//types
+export type TodoListType= {
+    id: string
+    addedDate: string
+    order: number
+    title: string
+}
+export type UpdateTaskModelType = {
+    title: string
+    description: string
+    status: TaskStatuses
+    priority: TodoTaskPriorities
+    startDate: string
+    deadline: string
+}
+export type TaskType = {
+    description: string
+    title: string
+    status: TaskStatuses
+    priority: TodoTaskPriorities
+    startDate: string
+    deadline: string
+    id: string
+    todoListId: string
+    order: number
+    addedDate: string
+}
+type CommonResponseType<T = {}> = {
+    resultCode: number
+    messages: Array<string>
+    data: T
+}
+type GetTasks = {
+    items: Array<TaskType>
+    totalCount: number
+    error: string | null
+}
+export enum TaskStatuses {
+    New,
+    InProgress,
+    Completed,
+    Draft
+}
+export enum TodoTaskPriorities {
+    Low,
+    Middle,
+    Hi,
+    Urgently,
+    Later
+}
+
+
