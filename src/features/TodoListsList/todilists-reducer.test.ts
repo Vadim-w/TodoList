@@ -7,8 +7,8 @@ import {
 } from './todolists-reducer';
 import {v1} from 'uuid';
 import {tasksReducer} from "./tasks-reducer";
-import {TaskStatuses} from "../api/todolist-api";
-import {TaskStateType} from "../AppWithRedux";
+import {TaskStatuses} from "../../api/todolist-api";
+import {TaskStateType} from "../../App/App";
 
 let todolistId1: string;
 let todolistId2: string;

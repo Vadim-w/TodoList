@@ -1,4 +1,4 @@
-import {todoListApi, TodoListType} from "../api/todolist-api";
+import {todoListApi, TodoListType} from "../../api/todolist-api";
 import {Dispatch} from "redux";
 
 let initialState: Array<TodoListDomainType> = []
@@ -12,7 +12,7 @@ export const todolistsReducer = (state: Array<TodoListDomainType> = initialState
         case 'CHANGE-TODOLIST-TITLE':
             return state.map(tl => tl.id === action.id ? {...tl, title: action.title} : tl)
         case 'CHANGE-TODOLIST-FILTER':
-            return state.map(tl => tl.id === action.id ? {...tl, title: action.filter} : tl)
+            return state.map(tl => tl.id === action.id ? {...tl, filter: action.filter} : tl)
         case 'SET-TODOLISTS':
             return action.todoLists.map(tl => ({...tl, filter: 'all'}))
         default:

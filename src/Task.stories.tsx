@@ -1,6 +1,6 @@
 import React from 'react';
 import {action} from "@storybook/addon-actions";
-import {Task} from "./Task";
+import {Task} from "./features/TodoListsList/Todolist/Task/Task";
 import {TaskStatuses} from "./api/todolist-api";
 
 export default {
