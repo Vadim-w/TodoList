@@ -1,23 +1,27 @@
 import {Provider} from "react-redux";
-import React from 'react'
+import React from "react"
 import {AppRootStateType} from "../../App/store";
 import {combineReducers, createStore} from "redux";
 import {tasksReducer} from "../../features/TodoListsList/tasks-reducer";
 import {todolistsReducer} from "../../features/TodoListsList/todolists-reducer";
 import {v1} from "uuid";
+import {appReducer} from "../../App/app-reducer";
+import {authReducer} from "../../features/Login/authReducer";
 
 
 
 
 const rootReducer = combineReducers({
     tasks: tasksReducer,
-    todolists: todolistsReducer
+    todolists: todolistsReducer,
+    app: appReducer,
+    auch: authReducer
 })
 
 const initialGlobalState: AppRootStateType  = {
     todolists: [
-        {id: "todolistId1", title: "What to learn", addedDate: "", order: 0, filter: "all"},
-        {id: "todolistId2", title: "What to buy", addedDate: "", order: 0, filter: "all" }
+        {id: "todolistId1", title: "What to learn", addedDate: "", order: 0, filter: "all", entityStatus: "idle"},
+        {id: "todolistId2", title: "What to buy", addedDate: "", order: 0, filter: "all", entityStatus: "idle" }
     ] ,
 
     tasks: {
@@ -44,6 +48,14 @@ const initialGlobalState: AppRootStateType  = {
             },
         ],
 
+    },
+    app: {
+        status: "idle",
+        error: null,
+        isInitialized: true
+    },
+    auch: {
+        isLoggedIn: false
     }
 
 

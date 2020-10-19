@@ -37,6 +37,17 @@ export const tasksApi = {
         return instance.put<CommonResponseType<{item: TaskType}>>( `/todo-lists/${todoId}/tasks/${taskId}`, model)
     }
 }
+export const authAPI = {
+    login(data: LoginParamsType) {
+        return instance.post<CommonResponseType<{userId: number}>>( '/auth/login', data)
+    },
+    logout() {
+        return instance.delete<CommonResponseType>( '/auth/login')
+    },
+    me() {
+        return instance.get<CommonResponseType<{item: MeResponseType}>>('/auth/me')
+    }
+}
 
 //types
 export type TodoListType= {
@@ -65,10 +76,10 @@ export type TaskType = {
     order: number
     addedDate: string
 }
-type CommonResponseType<T = {}> = {
+export type CommonResponseType<D = {}> = {
     resultCode: number
     messages: Array<string>
-    data: T
+    data: D
 }
 type GetTasks = {
     items: Array<TaskType>
@@ -87,6 +98,17 @@ export enum TodoTaskPriorities {
     Hi,
     Urgently,
     Later
+}
+export type LoginParamsType = {
+    email: string
+    password: string
+    rememberMe: boolean
+    captcha?: boolean
+}
+export type MeResponseType = {
+    id: number
+    email: string
+    login: string
 }
 
 

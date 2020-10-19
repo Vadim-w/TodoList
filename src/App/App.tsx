@@ -1,14 +1,53 @@
-import React from 'react';
+import React, {useCallback, useEffect} from 'react';
 import './App.css';
-import {AppBar, Button, Container, IconButton, Toolbar, Typography} from "@material-ui/core";
-import {Menu} from "@material-ui/icons";
-import {TaskType} from "../api/todolist-api";
+import {
+    AppBar,
+    Button,
+    CircularProgress,
+    Container,
+    IconButton,
+    LinearProgress,
+    Toolbar,
+    Typography
+} from "@material-ui/core";
+import {Menu, Router} from "@material-ui/icons";
 import {TodoListsList} from "../features/TodoListsList/TodoListsList";
+import {useDispatch, useSelector} from "react-redux";
+import {AppRootStateType} from "./store";
+import {ErrorSnackbar} from "../components/ErrorSnackbar/ErrorSnackBar";
+import {Login} from "../features/Login/Login";
+import { Switch, Route, Redirect } from 'react-router-dom';
+import {initializeAppTC} from "./app-reducer";
+import {logoutTC} from "../features/Login/authReducer";
 
+type PropsType = {
+    demo?: boolean
+}
 
-function  App() {
+function App({demo = false}: PropsType) {
+    const status = useSelector<AppRootStateType, string>(state => state.app.status)
+    const isInitialized = useSelector<AppRootStateType, boolean>(state => state.app.isInitialized)
+    const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auch.isLoggedIn)
+    const dispatch = useDispatch()
+
+    useEffect( () => {
+        dispatch(initializeAppTC())
+    }, [])
+
+    const logoutHandler = useCallback( () => {
+        dispatch(logoutTC())
+    }, [])
+
+    if (!isInitialized) {
+        return <div
+            style={{position: 'fixed', top: '30%', textAlign: 'center', width: '100%'}}>
+            <CircularProgress/>
+        </div>
+    }
+
     return (
         <div className="App">
+            <ErrorSnackbar/>
             <AppBar position="static">
                 <Toolbar>
                     <IconButton edge="start" color="inherit" aria-label="menu">
@@ -17,17 +56,23 @@ function  App() {
                     <Typography variant="h6">
                         News
                     </Typography>
-                    <Button color="inherit">Login</Button>
+                    {isLoggedIn && <Button color="inherit" onClick={logoutHandler}>Log out</Button>}
                 </Toolbar>
+                {status === "loading" && <LinearProgress color="secondary"/>}
             </AppBar>
             <Container fixed>
-                   <TodoListsList/>
+                <Switch>
+                    <Route exact path={'/'} render={() => <TodoListsList demo={demo}/>}/>
+                    <Route path={'/login'} render={() => <Login/>}/>
+                    <Route path={'/404'} render={() => <h1>404: PAGE NOT FOUND</h1>}/>
+                    <Redirect from={'*'} to={'/404'}/>
+                </Switch>
             </Container>
         </div>
     );
 }
 
-export default  App;
+export default App;
 
 
 
