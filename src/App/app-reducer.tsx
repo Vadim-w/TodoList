@@ -30,7 +30,8 @@ export const setIsInitializedAC = (initialized: boolean) => ({type: "APP/SET-INI
 
 //thunks
 export const initializeAppTC = () => (dispatch: Dispatch) => {
-    authAPI.me().then(res => {
+    authAPI.me()
+        .then(res => {
         if (res.data.resultCode === 0) {
             dispatch(setIsLoggedInAC(true));
             dispatch(setIsInitializedAC(true))
@@ -50,6 +51,9 @@ type ActionsType =
     | SetAppErrorActionType
     | ReturnType<typeof setIsInitializedAC>
 
+export type SetAppStatusActionType = ReturnType<typeof setAppStatusAC>
+export type SetAppErrorActionType = ReturnType<typeof setAppErrorAC>
+
 type InitialStateType = {
     status: RequestStatusType
     error: string | null,
@@ -58,6 +62,5 @@ type InitialStateType = {
 
 export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
 
-export type SetAppStatusActionType = ReturnType<typeof setAppStatusAC>
-export type SetAppErrorActionType = ReturnType<typeof setAppErrorAC>
+
 
