@@ -51,7 +51,7 @@ export const TodoListsList: React.FC<PropsType> = React.memo(({demo = false}) =>
     }, [])
 
     const changeFilter = useCallback((newFilterValue: FilterValuesType, todoListID: string) => {
-        dispatch(ChangeTodoListFilterAC(todoListID, newFilterValue))
+        dispatch(ChangeTodoListFilterAC({ todolistFilter: newFilterValue, todolistID: todoListID}))
     }, [])
 
     const removeTodoList = useCallback((todoListID: string) => {
