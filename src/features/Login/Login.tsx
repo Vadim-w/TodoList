@@ -14,7 +14,7 @@ type FormikErrorType = {
 
 
 export const Login = () => {
-    const isLoggedIn = useSelector<AppRootStateType, boolean>((state => state.auch.isLoggedIn))
+    const isLoggedIn = useSelector<AppRootStateType, boolean>((state => state.auth.isLoggedIn))
     const dispatch = useDispatch()
 
     const formik = useFormik({
@@ -78,7 +78,7 @@ export const Login = () => {
                             margin="normal"
                             {...formik.getFieldProps("password")}
                         />
-                        {formik.errors.password ? <div style={{color: "red"}}>{formik.errors.password}</div> : null}
+                        {formik.errors.password && <div style={{color: "red"}}>{formik.errors.password}</div> }
                         <FormControlLabel
                             label={'Remember me'}
                             control={<Checkbox/>}

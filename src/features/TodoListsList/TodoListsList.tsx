@@ -22,7 +22,7 @@ type PropsType = {
 }
 
 export const TodoListsList: React.FC<PropsType> = React.memo(({demo = false}) => {
-    const isLoggedIn = useSelector<AppRootStateType, boolean>((state => state.auch.isLoggedIn))
+    const isLoggedIn = useSelector<AppRootStateType, boolean>((state => state.auth.isLoggedIn))
     const todolists = useSelector<AppRootStateType, Array<TodoListDomainType>>(state => state.todolists)
     const tasks = useSelector<AppRootStateType, TasksStateType>(state => state.tasks)
     const dispatch = useDispatch()

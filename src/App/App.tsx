@@ -10,7 +10,7 @@ import {
     Toolbar,
     Typography
 } from "@material-ui/core";
-import {Menu, Router} from "@material-ui/icons";
+import {Menu} from "@material-ui/icons";
 import {TodoListsList} from "../features/TodoListsList/TodoListsList";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "./store";
@@ -27,7 +27,7 @@ type PropsType = {
 function App({demo = false}: PropsType) {
     const status = useSelector<AppRootStateType, string>(state => state.app.status)
     const isInitialized = useSelector<AppRootStateType, boolean>(state => state.app.isInitialized)
-    const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auch.isLoggedIn)
+    const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
     const dispatch = useDispatch()
 
     useEffect( () => {

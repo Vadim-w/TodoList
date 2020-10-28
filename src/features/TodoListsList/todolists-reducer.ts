@@ -10,14 +10,14 @@ const slice = createSlice({
     name: 'todoLlist',
     initialState: initialState,
     reducers: {
-        RemoveTodoListAC(state, action: PayloadAction<{todoListID: string}>) {
-            const index = state.findIndex(tl => tl.id === action.payload.todoListID)
+        RemoveTodoListAC(state, action: PayloadAction<string>) {
+            const index = state.findIndex(tl => tl.id === action.payload)
             if (index > -1) {
                 state.splice(index, 1)
             }
         },
-        AddTodoListAC(state, action: PayloadAction<{todoList: TodoListType}>) {
-            state.unshift({...action.payload.todoList, filter: "all", entityStatus: "idle"})
+        AddTodoListAC(state, action: PayloadAction<TodoListType>) {
+            state.unshift({...action.payload, filter: "all", entityStatus: "idle"})
         },
         ChangeTodoListTitleAC(state, action: PayloadAction<{todolistTitle: string, todolistID: string}>) {
             const index = state.findIndex(tl => tl.id === action.payload.todolistID)
@@ -59,17 +59,14 @@ export const getTodoLists = () => (dispatch: Dispatch) => {
 
 }
 export const deleteTodoListTC = (todoListID: string) => (dispatch: Dispatch) => {
-    debugger
     dispatch(setAppStatusAC({status: "loading"}))
     dispatch(changeTodoListEntityStatusAC({todolistID: todoListID, entityStatus: 'loading'}))
     todoListApi.deleteTodoList(todoListID)
         .then((res) => {
-            dispatch(RemoveTodoListAC({todoListID}))
+            dispatch(RemoveTodoListAC(todoListID))
             dispatch(setAppStatusAC({status: "succeeded"}))
-            dispatch(changeTodoListEntityStatusAC({todolistID: todoListID, entityStatus: 'idle'}))
         })
         .catch((error) => {
-            debugger
             handleServerNetworkError(error, dispatch)
         })
 }
@@ -78,7 +75,7 @@ export const createTodoListTC = (title: string) => (dispatch: Dispatch) => {
     todoListApi.createTodoList(title)
         .then((res) => {
             if (res.data.resultCode === 0) {
-                dispatch(AddTodoListAC({todoList: res.data.data.item}))
+                dispatch(AddTodoListAC(res.data.data.item))
                 dispatch(setAppStatusAC({status: "succeeded"}))
             } else {
                 if (res.data.messages.length) {
