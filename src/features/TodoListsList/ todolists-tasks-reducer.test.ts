@@ -1,4 +1,9 @@
-import {AddTodoListAC, RemoveTodoListAC, TodoListDomainType, todolistsReducer} from "./todolists-reducer";
+import {
+    createTodoListTC,
+    removeTodoListTC,
+    TodoListDomainType,
+    todolistsReducer
+} from "./todolists-reducer";
 import {tasksReducer, TasksStateType} from "./tasks-reducer";
 import {TaskStatuses} from "../../api/todolist-api";
 
@@ -40,7 +45,7 @@ beforeEach( () => {
 test('property with todolistId should be deleted', () => {
 
 
-    const action = RemoveTodoListAC("todolistId2");
+    const action = removeTodoListTC.fulfilled("todolistId2", 'requetId', "todolistId2");
 
     const endState = tasksReducer(startState, action)
 
@@ -62,7 +67,7 @@ test('ids should be equals', () => {
         title: "new todolist"
     }
 
-    const action = AddTodoListAC(newTodoList);
+    const action = createTodoListTC.fulfilled(newTodoList, 'requestId', newTodoList.title);
 
     const endTasksState = tasksReducer(startTasksState, action)
     const endTodolistsState = todolistsReducer(startTodolistsState, action)

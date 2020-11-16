@@ -1,9 +1,9 @@
 import React from 'react'
 import {Checkbox, FormControl, FormControlLabel, FormGroup, FormLabel, TextField, Button, Grid} from '@material-ui/core'
-import {useFormik} from "formik";
+import {FormikHelpers, useFormik} from "formik";
 import {loginTC} from "./authReducer";
-import {useDispatch, useSelector} from "react-redux";
-import {AppRootStateType} from "../../App/store";
+import {useSelector} from "react-redux";
+import {AppRootStateType, useAppDispatch} from "../../App/store";
 import { Redirect } from 'react-router-dom';
 
 type FormikErrorType = {
@@ -11,11 +11,16 @@ type FormikErrorType = {
     password?: string
     rememberMe?: boolean
 }
+type FormValuesType = {
+    email: string
+    password: string
+    rememberMe: boolean
+}
 
 
 export const Login = () => {
     const isLoggedIn = useSelector<AppRootStateType, boolean>((state => state.auth.isLoggedIn))
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
 
     const formik = useFormik({
         initialValues: {
@@ -25,13 +30,14 @@ export const Login = () => {
         },
         validate: (values) => {
             const errors: FormikErrorType = {};
-            if (!values.email) {
-                errors.email = 'Required';
-            } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-                errors.email = 'Invalid email address';
-            } else if (values.email.length > 50) {
-                errors.email = 'Email must be no more than 50 characters'
-            }
+            // if (!values.email) {
+            //     errors.email = 'Required';
+            // }
+            // else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+            //     errors.email = 'Invalid email address';
+            // } else if (values.email.length > 50) {
+            //     errors.email = 'Email must be no more than 50 characters'
+            // }
             if (!values.password) {
                 errors.password = 'Required';
             } else if (values.password.length > 50) {
@@ -39,9 +45,15 @@ export const Login = () => {
             }
             return errors;
         },
-        onSubmit: values => {
+        onSubmit: async (values, formikHelpers: FormikHelpers<FormValuesType>) => {
+           const action = await dispatch(loginTC(values))
             debugger
-            dispatch(loginTC(values))
+            if (loginTC.rejected.match(action)) {
+                if (action.payload?.fieldsErrors?.length) {
+                    const error = action.payload?.fieldsErrors[0]
+                    formikHelpers.setFieldError(error.field, error.error)
+                }
+            }
         },
     })
 

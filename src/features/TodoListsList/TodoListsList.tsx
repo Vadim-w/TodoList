@@ -5,9 +5,8 @@ import {
     ChangeTodoListFilterAC,
     changeTodoListTitleTC,
     createTodoListTC,
-    deleteTodoListTC,
     FilterValuesType,
-    getTodoLists,
+    getTodoLists, removeTodoListTC,
     TodoListDomainType
 } from "./todolists-reducer";
 import {addTaskTC, removeTaskTC, TasksStateType, updateTaskTC} from "./tasks-reducer";
@@ -34,20 +33,20 @@ export const TodoListsList: React.FC<PropsType> = React.memo(({demo = false}) =>
         dispatch(getTodoLists())
     }, [])
 
-    const removeTask = useCallback((taskId: string, todoListID: string) => {
-        dispatch(removeTaskTC(todoListID, taskId))
+    const removeTask = useCallback((taskID: string, todoListID: string) => {
+        dispatch(removeTaskTC({todoListID, taskID}))
     }, [])
 
-    const changeStatus = useCallback((id: string, status: TaskStatuses, todoListID: string) => {
-        dispatch(updateTaskTC(id, {status}, todoListID))
+    const changeStatus = useCallback((taskId: string, status: TaskStatuses, todolistId: string) => {
+        dispatch(updateTaskTC({ taskId, domainModel: {status}, todolistId}))
     }, [])
 
-    const changeTaskTitle = useCallback((taskID: string, newTitle: string, todoListID: string) => {
-        dispatch(updateTaskTC(taskID, {title: newTitle}, todoListID))
+    const changeTaskTitle = useCallback((taskId: string, newTitle: string, todolistId: string) => {
+        dispatch(updateTaskTC({ taskId, domainModel: {title: newTitle}, todolistId }))
     }, [])
 
-    const addTask = useCallback((newTaskName: string, todoListID: string) => {
-        dispatch(addTaskTC(todoListID, newTaskName))
+    const addTask = useCallback((title: string, todoListID: string) => {
+        dispatch(addTaskTC({todoListID, title}))
     }, [])
 
     const changeFilter = useCallback((newFilterValue: FilterValuesType, todoListID: string) => {
@@ -55,7 +54,7 @@ export const TodoListsList: React.FC<PropsType> = React.memo(({demo = false}) =>
     }, [])
 
     const removeTodoList = useCallback((todoListID: string) => {
-        dispatch(deleteTodoListTC(todoListID))
+        dispatch(removeTodoListTC(todoListID))
     }, [])
 
     const addTodoList = useCallback((title: string) => {
@@ -63,7 +62,7 @@ export const TodoListsList: React.FC<PropsType> = React.memo(({demo = false}) =>
     }, [])
 
     const changeTodoListTitle = useCallback((todoListID: string, newTitle: string) => {
-        dispatch(changeTodoListTitleTC(newTitle, todoListID))
+        dispatch(changeTodoListTitleTC({ title: newTitle, todoListID}))
     }, [])
 
     if (!isLoggedIn) {

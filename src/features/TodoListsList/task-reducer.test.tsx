@@ -1,9 +1,9 @@
 import {
-    addTaskAC,
-    removeTaskAC,
+    addTaskTC,
+    removeTaskTC,
     tasksReducer,
     TasksStateType,
-    updateTaskAC
+    updateTaskTC
 } from './tasks-reducer';
 import {TaskStatuses, TodoTaskPriorities} from "../../api/todolist-api";
 
@@ -61,15 +61,15 @@ beforeEach(() => {
 })
 
 test('correct task should be deleted from correct array', () => {
-
-
-    const action = removeTaskAC({taskID: "2", todoListID: "todolistId2"});
+    let param = {taskID: "2", todoListID: "todolistId2"};
+    const action = removeTaskTC.fulfilled(param, "requestId", param);
 
     const endState = tasksReducer(startState, action)
 
     expect(endState["todolistId1"].length).toBe(3);
     expect(endState["todolistId2"].length).toBe(2);
     expect(endState["todolistId2"].every(t => t.id != "2")).toBeTruthy();
+
 });
 
 
@@ -87,7 +87,7 @@ test('correct task should be added to correct array', () => {
         order: 0,
         addedDate: ''
     };
-    const action = addTaskAC(task);
+    const action = addTaskTC.fulfilled(task, 'requestId', {title: task.title, todoListID: task.todoListId});
 
     const endState = tasksReducer(startState, action)
 
@@ -101,7 +101,8 @@ test('correct task should be added to correct array', () => {
 
 test('status of specified task should be changed', () => {
 
-    const action = updateTaskAC({taskId: "2", model: {status: TaskStatuses.New}, todolistId: "todolistId2"});
+    let domainModal = {taskId: "2", domainModel: {status: TaskStatuses.New}, todolistId: "todolistId2"};
+    const action = updateTaskTC.fulfilled(domainModal, 'requestId', domainModal);
 
     const endState = tasksReducer(startState, action)
 
@@ -112,7 +113,8 @@ test('status of specified task should be changed', () => {
 
 test('title of specified task should be changed', () => {
 
-    const action = updateTaskAC({taskId: "2", model: {title: "beer"}, todolistId: "todolistId2"});
+    let updateModel = {taskId: "2", domainModel: {title: "beer"}, todolistId: "todolistId2"};
+    const action = updateTaskTC.fulfilled(updateModel, 'requestId', updateModel);
 
     const endState = tasksReducer(startState, action)
 

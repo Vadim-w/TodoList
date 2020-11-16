@@ -76,9 +76,11 @@ export type TaskType = {
     order: number
     addedDate: string
 }
+export type FieldsErrorType = { field: string, error: string };
 export type CommonResponseType<D = {}> = {
     resultCode: number
     messages: Array<string>
+    fieldsErrors?: Array<FieldsErrorType>
     data: D
 }
 type GetTasks = {
